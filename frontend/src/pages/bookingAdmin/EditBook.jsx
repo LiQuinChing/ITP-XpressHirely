@@ -23,7 +23,7 @@ const EditBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/books/${id}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books/${id}`)
       .then((response) => {
         setCustomerName(response.data.customerName);
         setIdNumber(response.data.idNumber);
@@ -57,7 +57,10 @@ const EditBook = () => {
     };
     setLoading(true);
     axios
-      .put(`http://localhost:5555/books/${id}`, data)
+      .put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books/${id}`,
+        data
+      )
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Booking Edited successfully", { variant: "success" });

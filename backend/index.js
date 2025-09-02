@@ -39,12 +39,28 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+
+const allowedOrigins = (process.env.FRONTEND_ORIGINS || 'http://localhost:5173')
+    .split(',')
+    .map(s => s.trim());
+
 app.use(cors({
-    origin: 'http://localhost:5173', // Adjust according to your front-end origin
+    origin(origin, cb) {
+        // allow non-browser requests or same-origin (no Origin header)
+        if (!origin) return cb(null, true);
+        if (allowedOrigins.includes(origin)) return cb(null, true);
+        return cb(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // set true only if you use cookies/auth across origins
 }));
+
+// app.use(cors({
+//     origin: 'http://localhost:5173', // Adjust according to your front-end origin
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 
 
 // Multer configuration for file uploads

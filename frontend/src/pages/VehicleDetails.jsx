@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFReport from "../components/PDFReport";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 
 const VehicleDetails = () => {
   const [acceptedRequests, setAcceptedRequests] = useState([]);
-  const [editingRequestId, setEditingRequestId] = useState(null); 
-  const [editFormData, setEditFormData] = useState({}); 
+  const [editingRequestId, setEditingRequestId] = useState(null);
+  const [editFormData, setEditFormData] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,15 +20,17 @@ const VehicleDetails = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = acceptedRequests.filter(request =>
+    const filtered = acceptedRequests.filter((request) =>
       request.VIN.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredRequests(filtered);
   }, [searchQuery, acceptedRequests]);
-  
+
   const fetchAcceptedRequests = async () => {
     try {
-      const response = await axios.get("http://localhost:5555/cars");
+      const response = await axios.get(
+        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars"
+      );
       const accepted = response.data.filter(
         (request) => request.status === "accepted"
       );
@@ -65,7 +67,11 @@ const VehicleDetails = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5555/cars/${recordToDelete}`);
+      await axios.delete(
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/cars/${recordToDelete}`
+      );
       fetchAcceptedRequests();
       setSuccessMessage("Vehicle deleted successfully!");
       setErrorMessage("");
@@ -75,12 +81,11 @@ const VehicleDetails = () => {
       setErrorMessage("Failed to delete vehicle.");
     }
     setTimeout(() => {
-      setSuccessMessage('');
-      setErrorMessage('');
+      setSuccessMessage("");
+      setErrorMessage("");
     }, 5000);
     setDeleteConfirmationOpen(false);
   };
-  
 
   const handleEditFormChange = (e) => {
     setEditFormData({
@@ -92,21 +97,23 @@ const VehicleDetails = () => {
   const handleEditFormSubmit = async () => {
     try {
       await axios.patch(
-        `http://localhost:5555/cars/${editingRequestId}`,
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/cars/${editingRequestId}`,
         editFormData
       );
-      fetchAcceptedRequests(); 
-      setEditingRequestId(null); 
+      fetchAcceptedRequests();
+      setEditingRequestId(null);
       setSuccessMessage("Vehicle details updated successfully!");
       setErrorMessage("");
     } catch (error) {
       console.error("Error editing request:", error);
       setSuccessMessage("");
-      setErrorMessage("Failed to update vehicle details."+error.message);
+      setErrorMessage("Failed to update vehicle details." + error.message);
     }
     setTimeout(() => {
-      setSuccessMessage('');
-      setErrorMessage('');
+      setSuccessMessage("");
+      setErrorMessage("");
     }, 5000);
   };
 
@@ -114,13 +121,19 @@ const VehicleDetails = () => {
     <div className="container mx-auto">
       <h1 className="text-3xl font-semibold mb-8">Accepted Vehicle Details</h1>
       {successMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
+        <div
+          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
           <p className="font-bold">Success:</p>
           <p>{successMessage}</p>
         </div>
       )}
       {errorMessage && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
           <p className="font-bold">Error:</p>
           <p>{errorMessage}</p>
         </div>
@@ -132,7 +145,9 @@ const VehicleDetails = () => {
           document={<PDFReport data={acceptedRequests} />}
           fileName="vehicle_details.pdf"
         >
-          {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
+          {({ blob, url, loading, error }) =>
+            loading ? "Loading document..." : "Download PDF"
+          }
         </PDFDownloadLink>
         <input
           type="text"
@@ -152,10 +167,14 @@ const VehicleDetails = () => {
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Brand</th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Model</th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Year</th>
-            <th className="px-4 py-2 bg-blue-200 text-blue-800">Fuel Consumption</th>
+            <th className="px-4 py-2 bg-blue-200 text-blue-800">
+              Fuel Consumption
+            </th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Color</th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Company</th>
-            <th className="px-4 py-2 bg-blue-200 text-blue-800">Price per km</th>
+            <th className="px-4 py-2 bg-blue-200 text-blue-800">
+              Price per km
+            </th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Features</th>
             <th className="px-4 py-2 bg-blue-200 text-blue-800">Actions</th>
           </tr>
@@ -182,7 +201,7 @@ const VehicleDetails = () => {
                   className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-5 rounded mr-2"
                   onClick={() => handleEdit(request._id)}
                 >
-                  Edit 
+                  Edit
                 </button>
                 <button
                   className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"

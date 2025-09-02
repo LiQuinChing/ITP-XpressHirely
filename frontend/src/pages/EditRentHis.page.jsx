@@ -21,7 +21,7 @@ const EditRentHisPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/rents/${id}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents/${id}`)
       .then((response) => {
         setName(response.data.name);
         setVehicle(response.data.vehicle);
@@ -49,7 +49,10 @@ const EditRentHisPage = () => {
     };
     setLoading(true);
     axios
-      .put(`http://localhost:5555/rents/${id}`, data)
+      .put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents/${id}`,
+        data
+      )
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Rent Added successfully", { variant: "success" });

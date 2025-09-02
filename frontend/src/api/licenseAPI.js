@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base API URL
-const BASE_URL = 'http://localhost:5555';
+const BASE_URL = '${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}';
 
 // API URLs for licenses and insurances
 const LICENSES_API_URL = `${BASE_URL}/licenses`;

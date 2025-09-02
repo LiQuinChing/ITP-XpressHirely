@@ -17,7 +17,9 @@ const Delete = () => {
   const DeleteF = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5555/chat/delete/${id}`)
+      .delete(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/delete/${id}`
+      )
       .then(() => {
         setLoading(false);
         navigate("/chat/chats");

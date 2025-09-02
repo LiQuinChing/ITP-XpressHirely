@@ -20,7 +20,10 @@ const CreateForAdmin = () => {
     };
     setL(true);
     axios
-      .post("http://localhost:5555/chat/create/admin", data) //data)
+      .post(
+        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/create/admin",
+        data
+      ) //data)
       .then((response) => {
         console.log(response);
         navigate("/chat/chats/admin");

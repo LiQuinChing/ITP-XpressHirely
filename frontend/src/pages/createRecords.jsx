@@ -26,7 +26,7 @@ const createRecords = () => {
     };
     setLoading(true);
     axios
-      .post("http://localhost:5555/records", data)
+      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records", data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Record Added Sucessfully !", { variant: "success" });

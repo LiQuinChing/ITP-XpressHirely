@@ -11,13 +11,16 @@ const userLogin = () => {
     try {
       setError(null);
       setLoading(true);
-      const response = await fetch("http://localhost:5555/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       const data = await response.json();
       if (response.status === 200) {

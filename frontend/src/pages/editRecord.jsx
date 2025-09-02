@@ -19,7 +19,7 @@ const editRecord = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/records/${id}`)
+      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`)
       .then((response) => {
         setMaintaintype(response.data.Maintaintype);
         setVehicleID(response.data.VehicleID);
@@ -44,7 +44,10 @@ const editRecord = () => {
     };
     setLoading(true);
     axios
-      .put(`http://localhost:5555/records/${id}`, data)
+      .put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`,
+        data
+      )
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Record Edited Successfully!", { variant: "success" });

@@ -15,7 +15,7 @@ const DeleteRentHisPage = () => {
   const handleDeleteRent = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5555/rents/${id}`)
+      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Rent Deleted successfully", { variant: "success" });

@@ -21,7 +21,9 @@ const Edit = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(`http://localhost:5555/chat/getchat/${id}`)
+      .get(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/getchat/${id}`
+      )
       .then((response) => {
         console.log(response);
         setL(false);
@@ -43,7 +45,10 @@ const Edit = () => {
     };
     setL(true);
     axios
-      .put(`http://localhost:5555/chat/edit/${id}`, data)
+      .put(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/edit/${id}`,
+        data
+      )
       .then((response) => {
         console.log(response);
         navigate("/chat/chats");

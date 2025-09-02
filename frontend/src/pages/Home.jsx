@@ -25,7 +25,7 @@ const Home = () => {
   useState(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/records")
+      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records")
       .then((response) => {
         setRecords(response.data.data);
         setLoading(false);

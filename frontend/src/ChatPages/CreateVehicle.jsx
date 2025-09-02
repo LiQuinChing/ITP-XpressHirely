@@ -21,7 +21,10 @@ const CreateVehicle = () => {
     };
     setL(true);
     axios
-      .post("http://localhost:5555/vehicle/create", data)
+      .post(
+        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/vehicle/create",
+        data
+      )
       .then((response) => {
         console.log(response);
         navigate("/vehicle/vehiclecreate");

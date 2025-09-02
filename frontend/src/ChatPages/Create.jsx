@@ -29,7 +29,10 @@ const Create = () => {
     };
 
     axios
-      .post("http://localhost:5555/vehicle/validateVehicle", dataOfVehicle)
+      .post(
+        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/vehicle/validateVehicle",
+        dataOfVehicle
+      )
       .then((response) => {
         console.log(response);
         if (response.data.success === "Vehicle number is valid") {
@@ -59,7 +62,7 @@ const Create = () => {
     };
     setL(true);
     axios
-      .post("http://localhost:5555/chat/create", {
+      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/create", {
         title: title,
         vehicle: vehiclenumber,
         issue: issue,

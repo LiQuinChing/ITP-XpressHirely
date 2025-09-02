@@ -27,7 +27,7 @@ const HomeRentHisPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5555/rents")
+      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents")
       .then((response) => {
         setRentHis(response.data.data);
         setLoading(false);

@@ -37,7 +37,7 @@ const CreateRentHisPage = () => {
       };
       setLoading(true);
       axios
-        .post("http://localhost:5555/rents", data)
+        .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents", data)
         .then(() => {
           setLoading(false);
           enqueueSnackbar("Rent Added successfully", { variant: "success" });

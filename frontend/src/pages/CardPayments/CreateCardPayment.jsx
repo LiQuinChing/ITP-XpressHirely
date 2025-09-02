@@ -27,7 +27,10 @@ const CreateCardPayment = () => {
     };
     setLoading(true);
     axios
-      .post(`http://localhost:5555/cardpayments/user`, data)
+      .post(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cardpayments/user`,
+        data
+      )
       .then(() => {
         setLoading(false);
         alert("Successful");

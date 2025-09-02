@@ -18,7 +18,11 @@ const AChatForAdmin = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(`http://localhost:5555/chat/getchat/${id}/reply`)
+      .get(
+        `${
+          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
+        }/chat/getchat/${id}/reply`
+      )
       .then((response) => {
         // console.log(response);
         setR(response.data);
@@ -36,7 +40,9 @@ const AChatForAdmin = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(`http://localhost:5555/chat/getchat/${id}`)
+      .get(
+        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/getchat/${id}`
+      )
       .then((response) => {
         console.log(response);
         setS(response.data);
