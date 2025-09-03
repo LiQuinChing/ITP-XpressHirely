@@ -6,8 +6,5 @@
       "runtime": "nodejs20.x",
       "includeFiles": "{routes,controllers,models,utils}/**/*"
     }
-  },
-  "routes": [
-    { "src": "^/(.*)$", "dest": "/api/index.js" }
-  ]
+  }
 }
