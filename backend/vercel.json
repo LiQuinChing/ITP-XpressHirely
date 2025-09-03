@@ -1,6 +1,17 @@
 {
 "installCommand": "npm install --legacy-peer-deps",
 "version": 2,
+"functions": {
+    "backend/index.js": {
+      "runtime": "nodejs20.x",
+      "includeFiles": [
+        "backend/routes/**",
+        "backend/controllers/**",
+        "backend/models/**",
+        "backend/utils/**",
+        "backend/*.js"
+      ]
+    },
 "builds": [
 {
     "src": "index.js",
@@ -14,4 +25,5 @@
 "routes":[
 { "src": "/(.*)", "dest": "/"}
 ]
+}
 }

@@ -1,4 +1,3 @@
-
 import express from "express";
 import mongoose from "mongoose";
 
@@ -42,7 +41,7 @@ app.use(express.json());
 
 const allowedOrigins = (process.env.FRONTEND_ORIGINS || 'http://localhost:5173')
     .split(',')
-    .map(s => s.trim());
+    .map(s => s.replace(/\/$/, '').trim());
 
 app.use(cors({
     origin(origin, cb) {
@@ -124,14 +123,14 @@ app.use('/books', booksRoute);
 
 app.use('/feedbacks', feedbackRoutes);
 // MongoDB connection
-mongoose.connect(mongoDBURL || process.env.DB_URI)
-    .then(() => {
-        console.log('MongoDB connected');
-        app.listen(PORT || process.env.PORT, () => {
-            console.log(`Server running on port ${PORT || process.env.PORT}`);
-        });
-    })
-    .catch(err => console.log('MongoDB connection error:', err));
+// mongoose.connect(mongoDBURL || process.env.DB_URI)
+//     .then(() => {
+//         console.log('MongoDB connected');
+//         app.listen(PORT || process.env.PORT, () => {
+//             console.log(`Server running on port ${PORT || process.env.PORT}`);
+//         });
+//     })
+//     .catch(err => console.log('MongoDB connection error:', err));
 
 // Scheduled tasks
 cron.schedule('0 7 * * *', async () => {
@@ -287,3 +286,4 @@ app.delete('/insurances/:id', async (req, res) => {
         res.status(500).send({ message: 'Failed to add insurance', error: error.message || error });
     }
 });
+export default app;
