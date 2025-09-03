@@ -6,6 +6,11 @@ import fs from 'fs';
 
 const router = express.Router();
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 //Route to save a new cash payment - client view
 router.post('/user', async (request, response) => {
     try {
@@ -88,15 +93,15 @@ router.put('/admin/:id', async (request, response) => {
         const { Status } = request.body;
         const { ReceiptNo } = request.body;
 
-            if (!Status || !ReceiptNo) {
-                return response.status(400).send({
-                  message: 'Send Status and ReceiptNo field',
-                });
-              }
+        if (!Status || !ReceiptNo) {
+            return response.status(400).send({
+                message: 'Send Status and ReceiptNo field',
+            });
+        }
 
         const { id } = request.params;
 
-        const result = await CashPayment.findByIdAndUpdate(id, {Status, ReceiptNo});
+        const result = await CashPayment.findByIdAndUpdate(id, { Status, ReceiptNo });
 
         if (!result) {
             return response.status(404).json({ message: 'Cash Payment not found' });
@@ -127,7 +132,9 @@ router.get('/admin/:id', async (request, response) => {
 export default router;
 
 // Read payment template
-const paymentTemplate = fs.readFileSync( 'templates/PaymentConfirmation.html' , 'utf8');
+const templatePath = path.join(__dirname, '../templates/PaymentConfirmation.html');
+
+const paymentTemplate = fs.readFileSync(templatePath, 'utf8');
 
 function handlePaymentConfirmation(req, res) {
 
@@ -143,7 +150,7 @@ function handlePaymentConfirmation(req, res) {
         // ReturnTime: req.body.ReturnTime,
         Amount: req.body.Amount,
         PaymentMethod: 'Cash'
-        
+
     };
     sendPaymentEmail(recipientEmail, dynamicData, paymentTemplate);
 }

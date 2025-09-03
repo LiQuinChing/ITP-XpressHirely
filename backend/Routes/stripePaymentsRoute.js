@@ -3,6 +3,12 @@ import cors from 'cors';
 import { StripePayment } from '../models/stripePaymentModel.js';
 import { STRIPE_SECRET_KEY } from '../config.js';
 import fs from 'fs';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // import sendPaymentEmail from '../index.js';
 
 const router = express.Router();
@@ -38,7 +44,7 @@ router.post('/user', async (request, response) => {
         //   });
         //   res.send({ clientSecret: paymentIntent.client_secret });
 
-          //stripe - end
+        //stripe - end
 
         return response.status(201).send(stripePayment);
     } catch (error) {
@@ -95,7 +101,9 @@ router.get('/user/:id', async (request, response) => {
 export default router;
 
 // Read payment template
-const paymentTemplate = fs.readFileSync( 'templates/PaymentConfirmation.html' , 'utf8');
+const templatePath = path.join(__dirname, '../templates/PaymentConfirmation.html');
+
+const paymentTemplate = fs.readFileSync(templatePath, 'utf8');
 
 function handlePaymentConfirmation(req, res) {
 
@@ -111,7 +119,7 @@ function handlePaymentConfirmation(req, res) {
         // ReturnTime: req.body.ReturnTime,
         Amount: req.body.Amount,
         PaymentMethod: 'Stripe'
-        
+
     };
     sendPaymentEmail(recipientEmail, dynamicData, paymentTemplate);
 }
