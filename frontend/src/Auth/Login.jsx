@@ -10,7 +10,7 @@ const Login = () => {
     await loginUser(values);
   };
   return (
-    <div className="px-80 py-16">
+    <div className="px-44 py-16">
       <Card className="form-container">
         <Flex gap="large" align="center">
           {/* Image */}

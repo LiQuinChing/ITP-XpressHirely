@@ -12,7 +12,7 @@ const Dashboard = () => {
     window.location.href = "/login";
   };
   return (
-    <div className="px-40 py-16">
+    <div className="px-2 py-16">
       <Card className="profile-card">
         <Flex vertical gap="small" align="center">
           <Avatar size={150} icon={<UserOutlined />} className="avatar" />
