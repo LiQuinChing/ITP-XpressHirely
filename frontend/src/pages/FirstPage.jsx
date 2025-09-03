@@ -7,6 +7,10 @@ import FeedbackCardUser from "../components/home/FeedbackCardUser";
 import FeedbackTable from "../components/home/FeedbackTable";
 // import backgroundImage from '../assets/photo-feed.jpg'
 import "./FirstPage.css";
+
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const FirstPage = () => {
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +19,7 @@ const FirstPage = () => {
 
   useEffect(() => {
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks")
+      .get("${BASE_URL}/feedbacks")
       .then((response) => {
         setFeedbacks(response.data.data);
         setLoading(false);
@@ -29,9 +33,7 @@ const FirstPage = () => {
   const handleDelete = (id) => {
     setLoading(true);
     axios
-      .delete(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks/${id}`
-      )
+      .delete(`${BASE_URL}/feedbacks/${id}`)
       .then(() => {
         setLoading(false);
         setFeedbacks((prevFeedbacks) =>

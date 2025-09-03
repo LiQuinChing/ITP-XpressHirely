@@ -5,6 +5,9 @@ import Spinner from "../../components/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const DeleteOffers = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,7 +17,7 @@ const DeleteOffers = () => {
   const handleDelete = () => {
     setLoading(true);
     axios
-      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`)
+      .delete(`${BASE_URL}/offers/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Offer deleted successfully!", { variant: "success" });

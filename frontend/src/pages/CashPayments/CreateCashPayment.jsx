@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import clientbg from "../../images/clientbg.jpeg";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateCashPayment = () => {
   // const [PaymentID, setPaymentID] = useState('');
   const [ReceiptNo, setReceiptNo] = useState("Pending");
@@ -29,10 +32,7 @@ const CreateCashPayment = () => {
     };
     setLoading(true);
     axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cashpayments/user`,
-        data
-      )
+      .post(`${BASE_URL}/cashpayments/user`, data)
       .then(() => {
         setLoading(false);
         alert("Successful");

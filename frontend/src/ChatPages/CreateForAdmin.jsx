@@ -5,6 +5,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Create.css";
 import BackButtonP from "../components/BackButtonP";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateForAdmin = () => {
   const [title, setTitle] = useState("");
   const { id } = useParams();
@@ -20,10 +23,7 @@ const CreateForAdmin = () => {
     };
     setL(true);
     axios
-      .post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/create/admin",
-        data
-      ) //data)
+      .post("${BASE_URL}/chat/create/admin", data) //data)
       .then((response) => {
         console.log(response);
         navigate("/chat/chats/admin");

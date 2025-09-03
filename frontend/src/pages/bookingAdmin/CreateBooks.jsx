@@ -4,6 +4,10 @@ import { useSnackbar } from "notistack";
 import BackButton from "../../components/BackButtonSahan";
 import Spinner from "../../components/SpinnerSahan";
 import axios from "axios";
+
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateBook = () => {
   const [customerName, setCustomerName] = useState("");
   const [idNumber, setIdNumber] = useState("");
@@ -35,7 +39,7 @@ const CreateBook = () => {
     setLoading(true);
 
     axios
-      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books", data)
+      .post(`${BASE_URL}/books`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Book created successfully", { variant: "success" });

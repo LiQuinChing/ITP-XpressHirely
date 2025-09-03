@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const RequestManagement = () => {
   const [cars, setCars] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
@@ -8,9 +11,7 @@ const RequestManagement = () => {
 
   const fetchAndFilterPendingRequests = async () => {
     try {
-      const response = await axios.get(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars"
-      ); // Assuming '/cars' is the endpoint to fetch all requests
+      const response = await axios.get(`${BASE_URL}/cars`); // Assuming '/cars' is the endpoint to fetch all requests
       const pendingRequests = response.data.filter(
         (car) => car.status === "pending"
       );
@@ -27,10 +28,10 @@ const RequestManagement = () => {
 
   const handleAcceptRequest = async (id, ownerEmail) => {
     try {
-      await axios.patch(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars/request/${id}`,
-        { status: "accepted", owner_Email: ownerEmail }
-      );
+      await axios.patch(`${BASE_URL}/cars/request/${id}`, {
+        status: "accepted",
+        owner_Email: ownerEmail,
+      });
       fetchAndFilterPendingRequests(); // Refresh the list of pending requests after accepting
       setSuccessMessage("Request accepted successfully");
       setErrorMessage("");
@@ -48,9 +49,7 @@ const RequestManagement = () => {
 
   const handleDeclineRequest = async (id) => {
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars/request/${id}`
-      ); // Assuming '/cars/:id' is the endpoint to delete the request
+      await axios.delete(`${BASE_URL}/cars/request/${id}`); // Assuming '/cars/:id' is the endpoint to delete the request
       fetchAndFilterPendingRequests(); // Refresh the list of pending requests after declining
       setSuccessMessage("Request declined successfully");
       setErrorMessage("");

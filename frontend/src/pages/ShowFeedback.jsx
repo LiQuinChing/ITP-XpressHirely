@@ -4,6 +4,10 @@ import axios from "axios";
 import BackButton from "../components/BackButton"; // Assuming this is correct
 import Spinner from "../components/Spinner"; // Assuming this is correct
 import "./FirstPage.css";
+
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowFeedback = () => {
   const [feedback, setFeedback] = useState(null);
   const [loading, setLoading] = useState(true); // Added loading state
@@ -12,9 +16,7 @@ const ShowFeedback = () => {
   useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks/${id}`
-        );
+        const { data } = await axios.get(`${BASE_URL}/feedbacks/${id}`);
         setFeedback(data);
         setLoading(false); // Set loading to false upon data retrieval
       } catch (error) {

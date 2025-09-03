@@ -9,6 +9,9 @@ import AllCashPaymentsTable from "./CashPayments/AllCashPaymentsTable";
 import AllRefundRequestsTable from "./RefundRequests/AllRefundRequestsTable";
 import AllStripePaymentsTable from "./StripePayments/AllStripePaymentsTable";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Payments_AdminView = () => {
   const [cardpayments, setAllCardPayments] = useState([]);
   const [cashpayments, setAllCashPayments] = useState([]);
@@ -70,9 +73,7 @@ const Payments_AdminView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cardpayments/admin`
-      )
+      .get(`${BASE_URL}/cardpayments/admin`)
       .then((response) => {
         setAllCardPayments(response.data.data);
         setLoading(false);
@@ -86,9 +87,7 @@ const Payments_AdminView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cashpayments/admin`
-      )
+      .get(`${BASE_URL}/cashpayments/admin`)
       .then((response) => {
         setAllCashPayments(response.data.data);
         setLoading(false);
@@ -102,9 +101,7 @@ const Payments_AdminView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/stripepayments/admin`
-      )
+      .get(`${BASE_URL}/stripepayments/admin`)
       .then((response) => {
         setAllStripePayments(response.data.data);
         setLoading(false);
@@ -118,9 +115,7 @@ const Payments_AdminView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/refundrequests/admin`
-      )
+      .get(`${BASE_URL}/refundrequests/admin`)
       .then((response) => {
         setAllRefundRequests(response.data.data);
         setLoading(false);

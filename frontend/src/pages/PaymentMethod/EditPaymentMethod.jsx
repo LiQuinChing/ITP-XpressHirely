@@ -4,6 +4,9 @@ import clientbg from "../../images/clientbg.jpeg";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const EditPaymentMethod = () => {
   const [PaymentMethod, setPaymentMethod] = useState("");
   const [CardNumber, setCardNumber] = useState("");
@@ -17,11 +20,7 @@ const EditPaymentMethod = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user/${id}`
-      )
+      .get(`${BASE_URL}/savepaymentmethod/user/${id}`)
       .then((response) => {
         setPaymentMethod(response.data.PaymentMethod);
         setCardNumber(response.data.CardNumber);
@@ -46,12 +45,7 @@ const EditPaymentMethod = () => {
     setLoading(true);
 
     axios
-      .put(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/savepaymentmethod/user/${id}`, data)
       .then(() => {
         setLoading(false);
         alert("Changes saved");

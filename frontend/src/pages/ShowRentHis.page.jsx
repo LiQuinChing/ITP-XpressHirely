@@ -6,6 +6,9 @@ import Spinner from "../components/Spinner";
 import jsPDF from "jspdf";
 import bgRentHis from "../images/bgRentHis.jpg";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowRentHisPage = () => {
   const [rent, setRentHis] = useState({});
   const [loading, setLoading] = useState(false);
@@ -14,7 +17,7 @@ const ShowRentHisPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents/${id}`)
+      .get(`${BASE_URL}/rents/${id}`)
       .then((response) => {
         setRentHis(response.data);
         setLoading(false);

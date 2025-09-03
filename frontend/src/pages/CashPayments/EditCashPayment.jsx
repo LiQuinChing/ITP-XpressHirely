@@ -5,6 +5,9 @@ import BackButton from "../../components/BackButton";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const EditCashPayment = () => {
   // const [PaymentID, setPaymentID] = useState('');
   const [ReceiptNo, setReceiptNo] = useState("");
@@ -19,11 +22,7 @@ const EditCashPayment = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/cashpayments/admin/${id}`
-      )
+      .get(`${BASE_URL}/cashpayments/admin/${id}`)
       .then((response) => {
         // setPaymentID(response.data.PaymentID);
         setReceiptNo(response.data.ReceiptNo);
@@ -50,12 +49,7 @@ const EditCashPayment = () => {
     setLoading(true);
 
     axios
-      .put(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/cashpayments/admin/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/cashpayments/admin/${id}`, data)
       .then(() => {
         setLoading(false);
         alert("Changes saved");

@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./ChatAdminLogin.css";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ChatAdminLogin = () => {
   // const [loading, setL] = useState(false)
   const [email, setEmail] = useState("");
@@ -21,10 +24,7 @@ const ChatAdminLogin = () => {
     };
 
     axios
-      .post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/admin/login",
-        data
-      )
+      .post(`${BASE_URL}/admin/login`, data)
       .then((response) => {
         console.log(response);
         if (response.data.success === "Success") {

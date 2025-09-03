@@ -4,6 +4,9 @@ import axios from "axios";
 import BackButton from "../../components/BackButton";
 import Spinner from "../../components/BackButton.jsx";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowOffers = () => {
   const [offers, setOffers] = useState({});
   const [loading, setLoading] = useState(false);
@@ -12,7 +15,7 @@ const ShowOffers = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`)
+      .get(`${BASE_URL}/offers/${id}`)
       .then((response) => {
         setOffers(response.data);
         setLoading(false);

@@ -12,6 +12,9 @@ import CashPaymentsTable from "./CashPayments/CashPaymentsTable";
 import PaymentMethodTable from "./PaymentMethod/PaymentMethodTable";
 import StripePaymentsTable from "./StripePayments/StripePaymentsTable";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Payments_ClientView = () => {
   const [cardpayments, setCardPayments] = useState([]);
   const [cashpayments, setCashPayments] = useState([]);
@@ -58,9 +61,7 @@ const Payments_ClientView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cardpayments/user`
-      )
+      .get(`${BASE_URL}/cardpayments/user`)
       .then((response) => {
         setCardPayments(response.data.data);
         setLoading(false);
@@ -74,9 +75,7 @@ const Payments_ClientView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cashpayments/user`
-      )
+      .get(`${BASE_URL}/cashpayments/user`)
       .then((response) => {
         setCashPayments(response.data.data);
         setLoading(false);
@@ -90,9 +89,7 @@ const Payments_ClientView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/stripepayments/user`
-      )
+      .get(`${BASE_URL}/stripepayments/user`)
       .then((response) => {
         setStripePayments(response.data.data);
         setLoading(false);
@@ -106,11 +103,7 @@ const Payments_ClientView = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user`
-      )
+      .get(`${BASE_URL}/savepaymentmethod/user`)
       .then((response) => {
         setPaymentMethods(response.data.data);
         setLoading(false);

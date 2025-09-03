@@ -6,6 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import vmaintain from "../images/vmaintain.png";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const deleteRecord = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -14,7 +17,7 @@ const deleteRecord = () => {
   const handleDeleteRecord = () => {
     setLoading(true);
     axios
-      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`)
+      .delete(`${BASE_URL}/records/${id}`)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Record Deleted Successfully!", { variant: "success" });

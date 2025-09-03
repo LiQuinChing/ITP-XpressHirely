@@ -5,6 +5,9 @@ import pay_card from "../../images/pay_card.jpg";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateStripePayment = () => {
   // const [PaymentID, setPaymentID] = useState('');
   const [CardNumber, setCardNumber] = useState("");
@@ -40,10 +43,7 @@ const CreateStripePayment = () => {
 
     setLoading(true);
     axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/stripepayments/user`,
-        data
-      )
+      .post(`${BASE_URL}/stripepayments/user`, data)
       .then(() => {
         setLoading(false);
         alert("Successful");

@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext.jsx";
 import { message } from "antd";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const userLogin = () => {
   const { login } = useAuth() || {};
   const [error, setError] = useState(null);
@@ -11,16 +14,13 @@ const userLogin = () => {
     try {
       setError(null);
       setLoading(true);
-      const response = await fetch(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
       const data = await response.json();
       if (response.status === 200) {

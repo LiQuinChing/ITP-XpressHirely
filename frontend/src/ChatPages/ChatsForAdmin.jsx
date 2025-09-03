@@ -10,6 +10,9 @@ import { MdOutlineAddBox, MdOutlineDelete } from "react-icons/md";
 import "./ChatsForAdmin.css";
 import { useNavigate } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ChatsForAdmin = () => {
   const [chats, setS] = useState([]);
   const [loading, setL] = useState(false);
@@ -19,7 +22,7 @@ const ChatsForAdmin = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/chats")
+      .get(`${BASE_URL}/chat/chats`)
       .then((response) => {
         setS(response.data);
         console.log(response);

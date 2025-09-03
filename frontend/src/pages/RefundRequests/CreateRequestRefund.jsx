@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import clientbg from "../../images/clientbg.jpeg";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateRequestRefund = () => {
   const [BookingID, setBookingID] = useState("");
   const [PaymentID, setPaymentID] = useState("");
@@ -25,10 +28,7 @@ const CreateRequestRefund = () => {
     };
     setLoading(true);
     axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/refundrequests/user`,
-        data
-      )
+      .post(`${BASE_URL}/refundrequests/user`, data)
       .then(() => {
         setLoading(false);
         // setDate('');

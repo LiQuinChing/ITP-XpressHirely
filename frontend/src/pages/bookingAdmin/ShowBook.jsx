@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import BackButton from "../../components/BackButtonSahan";
 import Spinner from "../../components/SpinnerSahan";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowBook = () => {
   const [book, setBook] = useState({});
   const [loading, setLoading] = useState(false);
@@ -12,7 +15,7 @@ const ShowBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books/${id}`)
+      .get(`${BASE_URL}/books/${id}`)
       .then((response) => {
         setBook(response.data);
         setLoading(false);

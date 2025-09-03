@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "./ChatUser.css";
 import { Link } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ChatUser = () => {
   const [loading, setL] = useState(false);
   const [idN, setidN] = useState();
@@ -20,10 +23,7 @@ const ChatUser = () => {
     };
 
     axios
-      .post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/user/create",
-        data
-      )
+      .post(`${BASE_URL}/user/create`, data)
       .then((response) => {
         console.log(response);
         navigate("/home");

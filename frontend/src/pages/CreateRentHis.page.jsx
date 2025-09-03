@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import bgRentHis from "../images/bgRentHis.jpg";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateRentHisPage = () => {
   const [name, setName] = useState("");
   const [vehicle, setVehicle] = useState("");
@@ -37,7 +40,7 @@ const CreateRentHisPage = () => {
       };
       setLoading(true);
       axios
-        .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents", data)
+        .post(`${BASE_URL}/rents`, data)
         .then(() => {
           setLoading(false);
           enqueueSnackbar("Rent Added successfully", { variant: "success" });

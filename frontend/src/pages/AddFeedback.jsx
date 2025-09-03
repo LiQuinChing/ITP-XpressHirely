@@ -6,6 +6,9 @@ import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
 import "./FirstPage.css";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const AddFeedback = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -36,10 +39,7 @@ const AddFeedback = () => {
     setLoading(true);
 
     try {
-      await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks",
-        { name, email, details }
-      );
+      await axios.post(`${BASE_URL}/feedbacks`, { name, email, details });
       enqueueSnackbar("Feedback added successfully!", { variant: "success" });
       navigate("/feedbacks/home"); // Navigate after successful save
     } catch (error) {

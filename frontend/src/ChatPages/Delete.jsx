@@ -9,6 +9,9 @@ import { BsInfoCircle } from "react-icons/bs";
 import { MdOutlineDelete } from "react-icons/md";
 import BackButtonP from "../components/BackButtonP";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Delete = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,9 +20,7 @@ const Delete = () => {
   const DeleteF = () => {
     setLoading(true);
     axios
-      .delete(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/delete/${id}`
-      )
+      .delete(`${BASE_URL}/chat/delete/${id}`)
       .then(() => {
         setLoading(false);
         navigate("/chat/chats");

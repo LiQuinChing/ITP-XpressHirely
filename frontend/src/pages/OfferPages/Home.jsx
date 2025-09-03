@@ -6,6 +6,9 @@ import { MdOutlineAddBox } from "react-icons/md";
 import OfferCard from "../../components/home/OfferCard";
 import OfferTable from "../../components/home/OfferTable.jsx";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Home = () => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers")
+      .get(`${BASE_URL}/offers`)
       .then((response) => {
         setOffers(response.data.data);
         setLoading(false);
@@ -28,7 +31,7 @@ const Home = () => {
   const handleDelete = (id) => {
     setLoading(true);
     axios
-      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`)
+      .delete(`${BASE_URL}/offers/${id}`)
       .then(() => {
         setLoading(false);
         setOffers((prevOffers) =>

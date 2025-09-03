@@ -5,6 +5,10 @@ import Spinner from "../components/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import "./FirstPage.css";
+
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const EditFeedback = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +21,7 @@ const EditFeedback = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks/${id}`)
+      .get(`${BASE_URL}/feedbacks/${id}`)
       .then((response) => {
         setName(response.data.name);
         setEmail(response.data.email);
@@ -40,10 +44,7 @@ const EditFeedback = () => {
     setLoading(true);
 
     axios
-      .put(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/feedbacks/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/feedbacks/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("feedback Edited Successfully", { variant: "success" }); //

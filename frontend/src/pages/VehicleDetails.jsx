@@ -4,6 +4,9 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFReport from "../components/PDFReport";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const VehicleDetails = () => {
   const [acceptedRequests, setAcceptedRequests] = useState([]);
   const [editingRequestId, setEditingRequestId] = useState(null);
@@ -28,9 +31,7 @@ const VehicleDetails = () => {
 
   const fetchAcceptedRequests = async () => {
     try {
-      const response = await axios.get(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars"
-      );
+      const response = await axios.get(`${BASE_URL}/cars`);
       const accepted = response.data.filter(
         (request) => request.status === "accepted"
       );
@@ -67,11 +68,7 @@ const VehicleDetails = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/cars/${recordToDelete}`
-      );
+      await axios.delete(`${BASE_URL}/cars/${recordToDelete}`);
       fetchAcceptedRequests();
       setSuccessMessage("Vehicle deleted successfully!");
       setErrorMessage("");
@@ -96,12 +93,7 @@ const VehicleDetails = () => {
 
   const handleEditFormSubmit = async () => {
     try {
-      await axios.patch(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/cars/${editingRequestId}`,
-        editFormData
-      );
+      await axios.patch(`${BASE_URL}/cars/${editingRequestId}`, editFormData);
       fetchAcceptedRequests();
       setEditingRequestId(null);
       setSuccessMessage("Vehicle details updated successfully!");

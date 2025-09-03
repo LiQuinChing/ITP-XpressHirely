@@ -5,6 +5,9 @@ import Spinner from "../../components/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const EditOffers = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +21,7 @@ const EditOffers = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`)
+      .get(`${BASE_URL}/offers/${id}`)
       .then((response) => {
         setName(response.data.name);
         setDescription(response.data.description);
@@ -41,10 +44,7 @@ const EditOffers = () => {
     setLoading(true);
 
     axios
-      .put(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/offers/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Offer Edited Successfully", { variant: "success" }); //

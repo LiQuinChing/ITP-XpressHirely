@@ -4,6 +4,9 @@ import clientbg from "../../images/clientbg.jpeg";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const SavePaymentMethod = () => {
   const [PaymentMethod, setPaymentMethod] = useState("");
   const [CardNumber, setCardNumber] = useState("");
@@ -22,12 +25,7 @@ const SavePaymentMethod = () => {
     };
     setLoading(true);
     axios
-      .post(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user`,
-        data
-      )
+      .post(`${BASE_URL}/savepaymentmethod/user`, data)
       .then(() => {
         setLoading(false);
         alert("Successful");

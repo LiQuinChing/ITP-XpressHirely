@@ -6,6 +6,9 @@ import Spinner from "../components/Spinner";
 import { saveAs } from "file-saver";
 import vmaintain from "../images/vmaintain.png";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowRecord = () => {
   const [record, setRecord] = useState({});
   const [loading, setLoading] = useState(false);
@@ -14,7 +17,7 @@ const ShowRecord = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`)
+      .get(`${BASE_URL}/records/${id}`)
       .then((response) => {
         setRecord(response.data);
         setLoading(false);

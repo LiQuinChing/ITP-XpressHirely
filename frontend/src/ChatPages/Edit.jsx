@@ -8,6 +8,9 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import BackButtonP from "../components/BackButtonP";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Edit = () => {
   const [title, setTitle] = useState("");
   const [vehicle, setV] = useState("VAn");
@@ -21,9 +24,7 @@ const Edit = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/getchat/${id}`
-      )
+      .get(`${BASE_URL}/chat/getchat/${id}`)
       .then((response) => {
         console.log(response);
         setL(false);
@@ -45,10 +46,7 @@ const Edit = () => {
     };
     setL(true);
     axios
-      .put(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/edit/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/chat/edit/${id}`, data)
       .then((response) => {
         console.log(response);
         navigate("/chat/chats");

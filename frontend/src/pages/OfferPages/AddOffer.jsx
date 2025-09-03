@@ -5,6 +5,9 @@ import Spinner from "../../components/Spinner";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const AddOffer = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -36,7 +39,7 @@ const AddOffer = () => {
     setLoading(true);
 
     axios
-      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers", {
+      .post(`${BASE_URL}/offers`, {
         name,
         description,
         details,

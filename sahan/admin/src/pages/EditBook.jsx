@@ -5,6 +5,9 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const EditBook = () => {
   const [customerName, setCustomerName] = useState("");
   const [idNumber, setIdNumber] = useState("");
@@ -23,7 +26,7 @@ const EditBook = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books/${id}`)
+      .get(`${BASE_URL}/books/${id}`)
       .then((response) => {
         setCustomerName(response.data.customerName);
         setIdNumber(response.data.idNumber);
@@ -57,10 +60,7 @@ const EditBook = () => {
     };
     setLoading(true);
     axios
-      .put(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/books/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/books/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Booking Edited successfully", { variant: "success" });

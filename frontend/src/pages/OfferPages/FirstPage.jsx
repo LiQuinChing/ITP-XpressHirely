@@ -6,6 +6,9 @@ import { MdOutlineAddBox } from "react-icons/md";
 import OfferCardUser from "../../components/home/OfferCardUser";
 import OfferTable from "../../components/home/OfferTable";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const FirstPage = () => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +17,7 @@ const FirstPage = () => {
 
   useEffect(() => {
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers")
+      .get(`${BASE_URL}/offers`)
       .then((response) => {
         setOffers(response.data.data);
         setLoading(false);
@@ -28,7 +31,7 @@ const FirstPage = () => {
   const handleDelete = (id) => {
     setLoading(true);
     axios
-      .delete(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/offers/${id}`)
+      .delete(`${BASE_URL}/offers/${id}`)
       .then(() => {
         setLoading(false);
         setOffers((prevOffers) =>

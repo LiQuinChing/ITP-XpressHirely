@@ -10,6 +10,9 @@ import RecordsCard from "../components/home/RecordsCard";
 import SearchBar from "../components/SearchBar";
 import vmaintain from "../images/vmaintain.png";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Home = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +28,7 @@ const Home = () => {
   useState(() => {
     setLoading(true);
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records")
+      .get(`${BASE_URL}/records`)
       .then((response) => {
         setRecords(response.data.data);
         setLoading(false);

@@ -4,6 +4,9 @@ import clientbg from "../../images/clientbg.jpeg";
 
 import { useNavigate, useParams } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const DeletePaymentMethod = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -12,11 +15,7 @@ const DeletePaymentMethod = () => {
   const handleDeletePaymentMethod = () => {
     setLoading(true);
     axios
-      .delete(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user/${id}`
-      )
+      .delete(`${BASE_URL}/savepaymentmethod/user/${id}`)
       .then(() => {
         setLoading(false);
         alert("Deleted successfully");

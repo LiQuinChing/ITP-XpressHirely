@@ -4,6 +4,9 @@ import adminbg from "../../images/adminbg.jpg";
 
 import { useNavigate, useParams } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const UpdateRefundRequest = () => {
   const [PaymentID, setPaymentID] = useState("");
   const [BookingID, setBookingID] = useState("");
@@ -19,11 +22,7 @@ const UpdateRefundRequest = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/refundrequests/admin/${id}`
-      )
+      .get(`${BASE_URL}/refundrequests/admin/${id}`)
       .then((response) => {
         setPaymentID(response.data.PaymentID);
         setBookingID(response.data.BookingID);
@@ -53,12 +52,7 @@ const UpdateRefundRequest = () => {
     setLoading(true);
 
     axios
-      .put(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/refundrequests/admin/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/refundrequests/admin/${id}`, data)
       .then(() => {
         setLoading(false);
         alert("Changes saved");

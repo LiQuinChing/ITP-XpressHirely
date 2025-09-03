@@ -10,6 +10,9 @@ import Select from "react-select";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 // Hardcoded brands and models
 const brands = [
   {
@@ -140,10 +143,7 @@ const RentRequest = () => {
     console.log("Submitting request:", vehicleRequest);
 
     try {
-      const response = await axios.post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cars",
-        vehicleRequest
-      );
+      const response = await axios.post(`${BASE_URL}/cars`, vehicleRequest);
 
       if (response.status === 201) {
         setSuccessMessage("Request submitted successfully");

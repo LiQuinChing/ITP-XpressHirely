@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import clientbg from "../../images/clientbg.jpeg";
 import Spinner from "../../components/Spinner";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowPaymentMethod = () => {
   const [paymentmethod, setPaymentMethod] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,11 +15,7 @@ const ShowPaymentMethod = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/savepaymentmethod/user/${id}`
-      )
+      .get(`${BASE_URL}/savepaymentmethod/user/${id}`)
       .then((response) => {
         setPaymentMethod(response.data);
         setLoading(false);

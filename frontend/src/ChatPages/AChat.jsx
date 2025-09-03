@@ -20,11 +20,7 @@ const AChat = () => {
     setL(true);
 
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/chat/getchat/${id}/reply`
-      )
+      .get(`/chat/getchat/${id}/reply`)
       .then((response) => {
         // console.log(response);
 
@@ -48,9 +44,7 @@ const AChat = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/getchat/${id}`
-      )
+      .get(`/chat/getchat/${id}`)
       .then((response) => {
         // console.log(response);
 

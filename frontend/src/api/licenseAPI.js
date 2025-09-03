@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Base API URL
-const BASE_URL = '${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}';
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || '').replace(/\/$/, '');
 
 // API URLs for licenses and insurances
 const LICENSES_API_URL = `${BASE_URL}/licenses`;

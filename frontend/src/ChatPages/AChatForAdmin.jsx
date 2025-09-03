@@ -9,6 +9,9 @@ import "./AChatForAdmin.css";
 
 import BackButtonP from "../components/BackButtonP";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const AChatForAdmin = () => {
   const [loading, setL] = useState(false);
   const [s, setS] = useState({});
@@ -18,11 +21,7 @@ const AChatForAdmin = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/chat/getchat/${id}/reply`
-      )
+      .get(`${BASE_URL}/chat/getchat/${id}/reply`)
       .then((response) => {
         // console.log(response);
         setR(response.data);
@@ -40,9 +39,7 @@ const AChatForAdmin = () => {
   useEffect(() => {
     setL(true);
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/getchat/${id}`
-      )
+      .get(`${BASE_URL}/chat/getchat/${id}`)
       .then((response) => {
         console.log(response);
         setS(response.data);

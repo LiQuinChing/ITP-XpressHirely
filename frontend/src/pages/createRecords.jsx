@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import vmaintain from "../images/vmaintain.png";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const createRecords = () => {
   const [Maintaintype, setMaintaintype] = useState("");
   const [VehicleID, setVehicleID] = useState("");
@@ -26,7 +29,7 @@ const createRecords = () => {
     };
     setLoading(true);
     axios
-      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records", data)
+      .post(`${BASE_URL}/records`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Record Added Sucessfully !", { variant: "success" });

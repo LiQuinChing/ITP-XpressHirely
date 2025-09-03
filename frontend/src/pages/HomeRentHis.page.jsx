@@ -11,6 +11,9 @@ import SearchBar from "../components/SearchBar";
 import { useLocation } from "react-router-dom";
 import bgRentHis from "../images/bgRentHis.jpg";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const HomeRentHisPage = () => {
   const [rents, setRentHis] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,7 +30,7 @@ const HomeRentHisPage = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/rents")
+      .get(`${BASE_URL}/rents`)
       .then((response) => {
         setRentHis(response.data.data);
         setLoading(false);

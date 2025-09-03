@@ -5,6 +5,9 @@ import clientbg from "../../images/clientbg.jpeg";
 import Spinner from "../../components/Spinner";
 import jsPDF from "jspdf";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowCardPayment = () => {
   const [cardpayment, setCardPayment] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,11 +16,7 @@ const ShowCardPayment = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/cardpayments/user/${id}`
-      )
+      .get(`${BASE_URL}/cardpayments/user/${id}`)
       .then((response) => {
         setCardPayment(response.data);
         setLoading(false);

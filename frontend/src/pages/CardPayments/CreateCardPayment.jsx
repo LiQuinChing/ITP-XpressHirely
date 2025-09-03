@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import BackButton from "../../components/BackButton";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const CreateCardPayment = () => {
   // const [NIC, setNIC] = useState('');
   const [CardHolderName, setCardHolderName] = useState("");
@@ -27,10 +30,7 @@ const CreateCardPayment = () => {
     };
     setLoading(true);
     axios
-      .post(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/cardpayments/user`,
-        data
-      )
+      .post(`${BASE_URL}/cardpayments/user`, data)
       .then(() => {
         setLoading(false);
         alert("Successful");

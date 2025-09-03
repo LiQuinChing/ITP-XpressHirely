@@ -6,6 +6,9 @@ import "./Create.css";
 import BackButtonP from "../components/BackButtonP";
 import { useLocation } from "react-router-dom";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Create = () => {
   const [title, setTitle] = useState("");
   const [vehiclenumber, setV] = useState("");
@@ -29,10 +32,7 @@ const Create = () => {
     };
 
     axios
-      .post(
-        "${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/vehicle/validateVehicle",
-        dataOfVehicle
-      )
+      .post(`${BASE_URL}/vehicle/validateVehicle`, dataOfVehicle)
       .then((response) => {
         console.log(response);
         if (response.data.success === "Vehicle number is valid") {
@@ -62,7 +62,7 @@ const Create = () => {
     };
     setL(true);
     axios
-      .post("${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/create", {
+      .post(`${BASE_URL}/chat/create`, {
         title: title,
         vehicle: vehiclenumber,
         issue: issue,

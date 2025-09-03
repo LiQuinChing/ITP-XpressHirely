@@ -6,6 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import vmaintain from "../images/vmaintain.png";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const editRecord = () => {
   const [Maintaintype, setMaintaintype] = useState("");
   const [VehicleID, setVehicleID] = useState("");
@@ -19,7 +22,7 @@ const editRecord = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`)
+      .get(`${BASE_URL}/records/${id}`)
       .then((response) => {
         setMaintaintype(response.data.Maintaintype);
         setVehicleID(response.data.VehicleID);
@@ -44,10 +47,7 @@ const editRecord = () => {
     };
     setLoading(true);
     axios
-      .put(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/records/${id}`,
-        data
-      )
+      .put(`${BASE_URL}/records/${id}`, data)
       .then(() => {
         setLoading(false);
         enqueueSnackbar("Record Edited Successfully!", { variant: "success" });

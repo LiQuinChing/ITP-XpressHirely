@@ -14,6 +14,9 @@ import "./Chats.css";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const Chats = () => {
   const [chats, setS] = useState([]);
   const [loading, setL] = useState(false);
@@ -28,9 +31,7 @@ const Chats = () => {
     console.log(user);
 
     axios
-      .get(
-        `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/chat/chats/${user}`
-      )
+      .get(`${BASE_URL}/chat/chats/${user}`)
       .then((response) => {
         setS(response.data);
 

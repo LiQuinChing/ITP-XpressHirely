@@ -6,6 +6,9 @@ import BackButton from "../../components/BackButton";
 import Spinner from "../../components/Spinner";
 import jsPDF from "jspdf";
 
+const RAW_BASE = import.meta.env.VITE_REACT_APP_BACKEND_BASEURL;
+const BASE_URL = (RAW_BASE || "").replace(/\/$/, "");
+
 const ShowRefundRequest = () => {
   const [refundrequest, setRefundRequest] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,11 +17,7 @@ const ShowRefundRequest = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `${
-          import.meta.env.VITE_REACT_APP_BACKEND_BASEURL
-        }/refundrequests/admin/${id}`
-      )
+      .get(`${BASE_URL}/refundrequests/admin/${id}`)
       .then((response) => {
         setRefundRequest(response.data);
         setLoading(false);
