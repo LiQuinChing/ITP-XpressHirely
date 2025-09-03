@@ -123,14 +123,14 @@ app.use('/books', booksRoute);
 
 app.use('/feedbacks', feedbackRoutes);
 // MongoDB connection
-// mongoose.connect(mongoDBURL || process.env.DB_URI)
-//     .then(() => {
-//         console.log('MongoDB connected');
-//         app.listen(PORT || process.env.PORT, () => {
-//             console.log(`Server running on port ${PORT || process.env.PORT}`);
-//         });
-//     })
-//     .catch(err => console.log('MongoDB connection error:', err));
+mongoose.connect(mongoDBURL || process.env.DB_URI)
+    .then(() => {
+        console.log('MongoDB connected');
+        app.listen(PORT || process.env.PORT, () => {
+            console.log(`Server running on port ${PORT || process.env.PORT}`);
+        });
+    })
+    .catch(err => console.log('MongoDB connection error:', err));
 
 // Scheduled tasks
 cron.schedule('0 7 * * *', async () => {
